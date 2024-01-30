@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>youtube player</title>
+</head>
+<body>
+
+<!-- COPY PASTE START  -->
+<style>
+#page-youtube-player-wrapper {
+    display: block;
+    margin-right: auto;
+    width: 100%;
+    container-type: inline-size;
+    container-name: youtube-content;
+}
+
+#page-youtube-player-wrapper h2 {
+    margin: .5em auto;
+    text-transform: capitalize;
+}
+
+#page-youtube-player-wrapper .content-wrapper {
+    margin-top: 16px;
+}
+
+#page-youtube-player-wrapper .content-wrapper ul {
+    padding-left: 0;
+    list-style: none;
+    margin: 0;
+    margin-top: 16px;
+}
+
+#page-youtube-player-wrapper .content-wrapper ul li > button {
+    text-align: left;
+    border: none;
+    cursor: pointer;
+    width:fit-content;
+    background: none;
+    /* font-size: 14px; */
+    margin: .3em 0;
+    
+    max-width: 100%;
+    max-height: 2.4em;
+    overflow: hidden;
+}
+#page-youtube-player-wrapper .content-wrapper ul li > button:hover {
+    text-decoration: underline;
+}
+
+#youtube-video-player iframe {
+    width: 100%;
+    height: 160px;
+}
+
+@container youtube-content (min-width: 360px){
+    #youtube-video-player iframe {
+        width: 360px;
+        height: calc(360px / 1.78);
+    }
+    #page-youtube-player-wrapper .content-wrapper ul li > button {
+        max-width: 360px;
+    }
+}
+@container youtube-content (min-width: 480px){
+    #youtube-video-player iframe {
+        width: 480px;
+        height: calc(480px / 1.78);
+    }
+    #page-youtube-player-wrapper .content-wrapper ul li > button {
+        max-width: 480px;
+    }
+}
+@container youtube-content (min-width: 640px){
+    #youtube-video-player iframe {
+        width: 640px;
+        height: calc(640px / 1.78);
+    }
+    #page-youtube-player-wrapper .content-wrapper ul li > button {
+        max-width: 640px;
+    }
+}
+@container youtube-content (min-width: 820px){
+    #youtube-video-player iframe {
+        width: 820px;
+        height: calc(820px / 1.78);
+    }
+    #page-youtube-player-wrapper .content-wrapper ul li > button {
+        max-width: 820px;
+    }
+}
+
+@container youtube-content (min-width: 1120px){
+    #page-youtube-player-wrapper .content-wrapper {
+        display: flex;
+        gap: 10px;
+    }
+
+    #page-youtube-player-wrapper .content-wrapper ul {
+        max-height: 464px;
+        /* max-height: 264px; */
+        overflow-y: auto;
+        margin-top: 0;
+    }
+
+    #page-youtube-player-wrapper .content-wrapper ul li > button {
+        max-width: 280px;
+    }
+    
+    #page-youtube-player-wrapper .content-wrapper ul::-webkit-scrollbar {
+        background: #515151a2;
+        width: 10px;
+    }
+    #page-youtube-player-wrapper .content-wrapper ul::-webkit-scrollbar-thumb {
+        background: #2f2f2f;
+        border-radius: 5px;
+    }
+}
+</style>
+
+    <h1>Jeesus Cafe Media</h1>
+    
+    <div id="page-youtube-player-wrapper">
+
+        <h2 id="youtube-video-title"></h2> 
+
+        <div class="content-wrapper">
+            
+            <div id="youtube-video-player"></div>
+
+            <ul>
+                <!-- An example list item below -->
+    
+                <!-- LIST_ITEM_START -->
+                <li>
+                    <button id="first-item" onclick="setPlayerMediaSource(this,
+                        'Z9vrpvz48DQ?si=OTieICvKVZ1UiH4m')">
+                        1. Ainoa ilo, pelastus, viisaus ja tapa kuolla rauhassa - Turkka Aaltonen
+                    </button>
+                </li>
+    
+                <li>
+                    <button onclick="setPlayerMediaSource(this,
+                        'FAJ_tqN8Nu0?si=JbeYHgUgteyObLgf')">
+                        2. Anna mulle hengen voimaa tulta lamppuun - Turkka Aaltonen
+                    </button>
+                </li>
+    
+                <li>
+                    <button onclick="setPlayerMediaSource(this,
+                        'dMmWXoAXtTA?si=3GPNasA3QtDRNRp4')">
+                        3. Anna sade Jumala - Turkka Aaltonen
+                    </button>
+                </li>
+    
+                <li>
+                    <button onclick="setPlayerMediaSource(this,
+                        'bFBsovoi1Wg?si=MDqVZX8-DAT-k7Fp')">
+                        4. Askeleissaan Herra täällä seuraajansa aina vie - Turkka Aaltonen
+                    </button>
+                </li>
+    
+                <li>
+                    <button onclick="setPlayerMediaSource(this,
+                        'NwUW_zH0Ks8?si=s_qmDhw3cxXcJJ0O')">
+                        5. Ei laulamasta lakkaa mun sielun iloissaan - Turkka Aaltonen
+                    </button>
+                </li>
+    
+                <li>
+                    <button onclick="setPlayerMediaSource(this,
+                        'AP4LMwbbbRs?si=QYykAg9uUzc_Gd-D')">
+                        6. Eikö 99 lammasta riitä sinulle - Turkka Aaltonen
+                    </button>
+                </li>
+                
+            </ul>
+        
+        </div>
+
+    </div>
+
+<script>
+function setPlayerMediaSource( button, source ) {
+    const element = document.getElementById('youtube-video-player');
+
+    while(element.hasChildNodes()) {
+        element.removeChild( element.firstChild );
+    }
+
+    if(button && button.textContent) 
+        document.getElementById('youtube-video-title').innerText = button.textContent.trim();
+
+    const frame = document.createElement('iframe');
+
+    frame.setAttribute('src', 'https:\/\/www.youtube.com\/embed\/'+source+'&rel=0');
+    frame.setAttribute('title', 'YouTube video player');
+    frame.setAttribute('frameborder', '0');
+    frame.setAttribute('allowfullscreen', 'true');
+    frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+    element.appendChild(frame);
+}
+
+document.getElementById('first-item').click();
+</script>
+<!-- COPY PASTE END  -->
+
+
+</body>
+</html>
