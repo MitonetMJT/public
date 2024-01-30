@@ -190,17 +190,30 @@ function setPlayerMediaSource( button, source ) {
     while(element.hasChildNodes()) {
         element.removeChild( element.firstChild );
     }
-
-    if(button && button.textContent) 
-        document.getElementById('youtube-video-title').innerText = button.textContent.trim();
+        
+    document.getElementById('youtube-video-title').innerText = (button && button.textContent) 
+        ? 
+            button.textContent.trim()
+        :
+            '';
 
     const frame = document.createElement('iframe');
 
-    frame.setAttribute('src', 'https:\/\/www.youtube.com\/embed\/'+source+'&rel=0');
-    frame.setAttribute('title', 'YouTube video player');
-    frame.setAttribute('frameborder', '0');
-    frame.setAttribute('allowfullscreen', 'true');
-    frame.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+    frame.setAttribute(
+        'src', 
+        'https:\/\/www.youtube.com\/embed\/'+source+'&rel=0');
+    frame.setAttribute(
+        'title', 
+        'YouTube video player');
+    frame.setAttribute(
+        'frameborder', 
+        '0');
+    frame.setAttribute(
+        'allowfullscreen', 
+        'true');
+    frame.setAttribute(
+        'allow', 
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
     element.appendChild(frame);
 }
 
