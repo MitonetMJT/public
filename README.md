@@ -1,2 +1,3 @@
 # public
-mitonet public shareable files repository
+
+Public static pages
