@@ -1,3 +1,21 @@
+
+/**
+ * Javascript LibraryElements.
+ * 
+ * Version 1.1.
+ * 
+ * Create HTML Elements super easily!
+ * 
+ * Use as a ES6 module. Use: import HTML from '<your-static-folder>/CreateHTMLElement.js'
+ * 
+ * Created by Miika Toivanen.
+ */
+
+/**
+ * 
+ * @param {string} eventname 
+ * @returns {boolean}
+ */
 function isEvent( eventname ) {
     return [
         'abort','afterprint','animationend','animationiteration',
@@ -13,6 +31,11 @@ function isEvent( eventname ) {
     ].indexOf(eventname) !== -1;
 }
 
+/**
+ * 
+ * @param {string} attributename 
+ * @returns {boolean}
+ */
 function isAttribute( attributename ) {
     return [
         "accept","accept-charset","accesskey","action","align","alt","async",
@@ -39,30 +62,49 @@ function isAttribute( attributename ) {
 }
 
 /**
+ * USAGE: HTML(FIRST_ARGUMENT, NEXT_ARGUMENT, NEXT_ARGUMENT, ...);
+ * 
+ * FIRST_ARGUMENT: HTML element tag. (div, a, p, h1...)
+ * 
+ * NEXT_ARGUMENT:
+ * 
+ * - TYPEOF string | number: assign given value as innerHTML to the element. (IF the element is text based, value is assigned as innerHTML)
+ * 
+ * - TYPEOF array: CAN insert ATTRIBUTE or EVENT or CHILD ELEMENT.
+ * 
+ * - TYPEOF object: CAN insert ATTRIBUTE_OBJ or EVENT_OBJ.
+ * 
+ * - TYPEOF HTMLElement: Insert this element into given HTMLElement as a child. 
+ * 
+ * -- ATTRIBUTE [name, value] like ["class", "main-container"]
+ * 
+ * -- ATTRIBUTE_OBJ {key: value} like {class: "main-container"}
+ *
+ * -- EVENT [event_name, value] like ["focus", e => {e.preventDefault()}]
+ *
+ * -- EVENT_OBJ {event_name: value} like {"focus": e => {e.preventDefault()}}
+ * 
+ * EXAMPLE USAGE: 
+ * 
+ * HTML("h1", "Hello world!", ["class", "main-title"], document.body); // inserts h1.main-title element into document.body
  * 
  * @returns {HTMLElement | null}
  */
 export default function HTML() {
     if(!arguments[0] || typeof arguments[0] !== 'string') {
-        console.error('You are missing the first argument. Please provide HTML Element tag name, such as "div", "p", "button", etc.')
+        console.error('Please provide HTML element tag name as a first argument.');
         return null;
     }
+
     const ELEMENT = document.createElement(arguments[0]);
 
     for(let i = 1; i < arguments.length; i++) {
 
-        if(typeof arguments[i] === 'string') {
+        if(['string', 'number'].indexOf(typeof arguments[i]) > -1) {
             if(arguments[0] === 'input')
                 ELEMENT.value = arguments[i];
             else
                 ELEMENT.innerHTML = arguments[i];
-        }
-        else if(typeof arguments[i] === 'number') {
-            if(arguments[0] === 'input')
-                ELEMENT.value = arguments[i];
-            else {
-                ELEMENT.innerHTML = arguments[i].toString();
-            }
         }
 
         else if (typeof arguments[i] === 'object') {
@@ -70,9 +112,6 @@ export default function HTML() {
             if(arguments[i] instanceof HTMLElement) {
                 arguments[i].appendChild(ELEMENT);
             }
-
-            // if the object is array indeed,
-            // maybe user is inserting child elements?
             else if(Array.isArray(arguments[i])) {
                 for(let c = 0; c < arguments[i].length; c++) {
 
@@ -94,8 +133,6 @@ export default function HTML() {
                     }
                 }
             }
-
-            // is not array, but regular object
             else {
                 for(let key in arguments[i]) {
 
